@@ -1,0 +1,6 @@
+{
+  "name": "ROS Noetic",
+  "image": "docker.io/osrf/ros:noetic-desktop-full-focal",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "root"
+}
