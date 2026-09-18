@@ -1,0 +1,3 @@
+interface:
+  display_name: "极简编码"
+  short_description: "先想清楚、最小修改、目标驱动验证的编码约束"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "故障诊断"
+  short_description: "Diagnose hard bugs and regressions"

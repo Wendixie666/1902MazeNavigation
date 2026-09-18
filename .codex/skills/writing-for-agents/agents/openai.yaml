@@ -1,0 +1,3 @@
+interface:
+  display_name: "Agent文档"
+  short_description: "Write documents agents consume"

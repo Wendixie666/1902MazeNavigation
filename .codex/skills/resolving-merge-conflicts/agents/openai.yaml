@@ -1,0 +1,3 @@
+interface:
+  display_name: "冲突解决"
+  short_description: "Resolve merge and rebase conflicts"
