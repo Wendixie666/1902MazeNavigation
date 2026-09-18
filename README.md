@@ -19,26 +19,22 @@
 
 环境要求：ROS Noetic、Gazebo、TurtleBot3 软件包和 Python 3。也可以使用仓库内的 `.devcontainer/` 配置。
 
-在仓库根目录执行：
+在仓库根目录执行一条命令即可启动。脚本会自动加载 ROS 环境、设置默认机器人型号，并在首次运行时构建工作区：
 
 ```bash
-source /opt/ros/noetic/setup.bash
-catkin_make
-source devel/setup.bash
-export TURTLEBOT3_MODEL=waffle
-roslaunch my_launch maze_exploration.launch
+./run_maze.sh
 ```
 
-默认不启动动态障碍物。需要启用时：
+默认不启动动态障碍物。需要启用时，将 launch 参数直接传给脚本：
 
 ```bash
-roslaunch my_launch maze_exploration.launch dynamic_obstacles:=true
+./run_maze.sh dynamic_obstacles:=true
 ```
 
 无图形界面的环境可以使用：
 
 ```bash
-roslaunch my_launch maze_exploration.launch gui:=false headless:=true
+./run_maze.sh gui:=false headless:=true
 ```
 
 ## 导航流程
@@ -54,6 +50,7 @@ LiDAR + Odometry → GMapping → Occupancy Grid
 ## 目录结构
 
 ```text
+run_maze.sh                         # 一条命令启动完整仿真
 src/
 ├── my_launch/
 │   ├── launch/maze_exploration.launch  # 完整仿真入口
@@ -72,4 +69,3 @@ python3 src/my_maze_world/scripts/compare_planners.py --csv results.csv
 ```
 
 基准测试在同一个网格迷宫上比较 Dijkstra 和 A*，输出路径长度、规划时间和扩展节点数等指标。
-

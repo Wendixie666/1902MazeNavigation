@@ -19,26 +19,22 @@ The project is intended for course experiments and algorithm demonstrations. It 
 
 Requirements: ROS Noetic, Gazebo, TurtleBot3 packages, and Python 3. The repository also includes a `.devcontainer/` configuration.
 
-From the repository root:
+Run one command from the repository root. The script loads the ROS environment, sets the default robot model, and builds the workspace on the first run:
 
 ```bash
-source /opt/ros/noetic/setup.bash
-catkin_make
-source devel/setup.bash
-export TURTLEBOT3_MODEL=waffle
-roslaunch my_launch maze_exploration.launch
+./run_maze.sh
 ```
 
-Dynamic obstacles are disabled by default. Enable them with:
+Dynamic obstacles are disabled by default. Pass launch arguments through the script:
 
 ```bash
-roslaunch my_launch maze_exploration.launch dynamic_obstacles:=true
+./run_maze.sh dynamic_obstacles:=true
 ```
 
 For a headless environment:
 
 ```bash
-roslaunch my_launch maze_exploration.launch gui:=false headless:=true
+./run_maze.sh gui:=false headless:=true
 ```
 
 ## Navigation flow
@@ -54,6 +50,7 @@ LiDAR + Odometry → GMapping → Occupancy Grid
 ## Repository layout
 
 ```text
+run_maze.sh                         # one-command simulation launcher
 src/
 ├── my_launch/
 │   ├── launch/maze_exploration.launch  # main simulation entry point
@@ -72,4 +69,3 @@ python3 src/my_maze_world/scripts/compare_planners.py --csv results.csv
 ```
 
 The benchmark compares Dijkstra and A* on the same grid maze and reports path length, planning time, and expanded nodes.
-
