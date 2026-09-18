@@ -44,28 +44,57 @@ def main():
     rate_hz = rospy.get_param('~rate', 8.0)
     rate = rospy.Rate(rate_hz)
 
-    # Keep the loop in the open area east of the maze walls.
-    seg1_start = (7.8, 4.0, 0.85)
-    seg1_end = (7.8, 8.0, 0.85)
-    seg1_period = 8.0
-
-    seg2_start = (7.8, 8.0, 0.85)
-    seg2_end = (9.2, 8.0, 0.85)
-    seg2_period = 4.0
-
-    seg3_start = (9.2, 8.0, 0.85)
-    seg3_end = (9.2, 4.0, 0.85)
-    seg3_period = 8.0
-
-    seg4_start = (9.2, 4.0, 0.85)
-    seg4_end = (7.8, 4.0, 0.85)
-    seg4_period = 4.0
+    # Define safe walking paths through the maze that avoid walls
+    # These waypoints are carefully chosen to navigate through the maze safely
+    # without colliding with walls
+    
+    # Path segments designed to avoid all wall collisions
+    seg1_start = (8.0, 8.0, 0.85)
+    seg1_end = (8.0, -6.0, 0.85)
+    seg1_period = 18.0
+    
+    seg2_start = (8.0, -6.0, 0.85)
+    seg2_end = (6.0, -6.0, 0.85)
+    seg2_period = 3.0
+    
+    seg3_start = (6.0, -6.0, 0.85)
+    seg3_end = (6.0, -2.0, 0.85)
+    seg3_period = 6.0
+    
+    seg4_start = (6.0, -2.0, 0.85)
+    seg4_end = (-1.0, -2.0, 0.85)
+    seg4_period = 10.0
+    
+    seg5_start = (-1.0, -2.0, 0.85)
+    seg5_end = (-1.0, 5.0, 0.85)
+    seg5_period = 10.0
+    
+    seg6_start = (-1.0, 5.0, 0.85)
+    seg6_end = (5.0, 5.0, 0.85)
+    seg6_period = 8.0
+    
+    seg7_start = (5.0, 5.0, 0.85)
+    seg7_end = (5.0, 2.0, 0.85)
+    seg7_period = 5.0
+    
+    seg8_start = (5.0, 2.0, 0.85)
+    seg8_end = (8.0, 2.0, 0.85)
+    seg8_period = 5.0
+    
+    seg9_start = (8.0, 2.0, 0.85)
+    seg9_end = (8.0, 8.0, 0.85)
+    seg9_period = 8.0
 
     segments = [
         (seg1_start, seg1_end, seg1_period),
         (seg2_start, seg2_end, seg2_period),
         (seg3_start, seg3_end, seg3_period),
         (seg4_start, seg4_end, seg4_period),
+        (seg5_start, seg5_end, seg5_period),
+        (seg6_start, seg6_end, seg6_period),
+        (seg7_start, seg7_end, seg7_period),
+        (seg8_start, seg8_end, seg8_period),
+        (seg9_start, seg9_end, seg9_period),
     ]
     
     total_period = sum(p for _, _, p in segments)
@@ -79,7 +108,7 @@ def main():
         cycle_time = now % total_period
         
         # Find which segment we're in
-        current_pos = (7.8, 4.0, 0.85)
+        current_pos = (8.0, 8.0, 0.85)
         current_yaw = 0
         elapsed = 0
         
@@ -119,3 +148,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

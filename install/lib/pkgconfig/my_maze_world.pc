@@ -1,0 +1,8 @@
+prefix=/workspaces/AIE1902mid__MazeNavigation_Wendy/install
+
+Name: my_maze_world
+Description: Description of my_maze_world
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: cv_bridge gazebo_msgs geometry_msgs image_transport rospy sensor_msgs std_msgs

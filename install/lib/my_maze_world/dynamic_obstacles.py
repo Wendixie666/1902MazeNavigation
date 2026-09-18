@@ -42,15 +42,14 @@ def main():
     start_time = rospy.Time.now().to_sec()
 
     # trajectory definitions (match names in maze22.world)
-    obs1_start = (-8.0, -6.0, 0.3)
-    obs1_end   = (-4.0, -6.0, 0.3)
+    obs1_start = (-8.0, -6.0, 0.4)
+    obs1_end   = (-4.0, -6.0, 0.4)
 
-    obs2_start = (5.0, -8.0, 0.3)
-    obs2_end   = (5.0, -4.0, 0.3)
+    obs2_start = (5.0, -8.0, 0.4)
+    obs2_end   = (5.0, -4.0, 0.4)
 
-    # Keep the circular path in the open southeast area of the maze.
-    obs3_center = (6.0, 8.0, 0.3)
-    obs3_radius = 0.8
+    obs3_center = (0.0, 2.0, 0.4)
+    obs3_radius = 1.5
 
     rospy.loginfo('dynamic_obstacles_mover started (rate: %.1f Hz)', rate_hz)
 
@@ -64,7 +63,8 @@ def main():
         ms1.pose = Pose()
         ms1.pose.position.x = p1[0]
         ms1.pose.position.y = p1[1]
-        ms1.pose.position.z = p1[2]
+        # lock Z to maze ground plane
+        ms1.pose.position.z = 0.0
         ms1.twist = Twist()
         ms1.reference_frame = 'world'
         try:
@@ -79,7 +79,8 @@ def main():
         ms2.pose = Pose()
         ms2.pose.position.x = p2[0]
         ms2.pose.position.y = p2[1]
-        ms2.pose.position.z = p2[2]
+        # lock Z to maze ground plane
+        ms2.pose.position.z = 0.0
         ms2.twist = Twist()
         ms2.reference_frame = 'world'
         try:
@@ -94,7 +95,8 @@ def main():
         ms3.pose = Pose()
         ms3.pose.position.x = p3[0]
         ms3.pose.position.y = p3[1]
-        ms3.pose.position.z = p3[2]
+        # lock Z to maze ground plane
+        ms3.pose.position.z = 0.0
         ms3.twist = Twist()
         ms3.reference_frame = 'world'
         try:

@@ -376,7 +376,7 @@
         </material>
       </visual>
     </link>
-    <pose>-8 -6 0.3 0 0 0</pose>
+    <pose>-8 -6 0.4 0 0 0</pose>
   </model>
 
   <model name="dynamic_obstacle_2">
@@ -402,7 +402,7 @@
         </material>
       </visual>
     </link>
-    <pose>5 -8 0.3 0 0 0</pose>
+    <pose>5 -8 0.4 0 0 0</pose>
   </model>
 
   <model name="dynamic_obstacle_3">
@@ -428,7 +428,7 @@
         </material>
       </visual>
     </link>
-    <pose>6.8 8 0.3 0 0 0</pose>
+    <pose>0 2 0.4 0 0 0</pose>
   </model>
 
   <!-- 新增指定的 person_walking actor（慢速，包含给定初始状态与动画、skin） -->
