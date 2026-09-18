@@ -2,6 +2,8 @@
 
 [English](README.en.md)
 
+![TurtleBot3 迷宫导航演示](assets/demo.gif)
+
 这是一个基于 ROS 1 Noetic 和 Gazebo 的 TurtleBot3 迷宫自主探索仿真项目。机器人在 `maze22.world` 中使用激光雷达和里程计建图，自动探索未知区域、规划路径并避开障碍物，直到相机检测到绿色目标。
 
 本项目主要用于课程实验和算法演示，组合使用现有 ROS 导航组件，并不是重新实现一套导航框架。

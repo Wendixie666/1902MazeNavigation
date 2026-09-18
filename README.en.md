@@ -2,6 +2,8 @@
 
 [简体中文](README.md)
 
+![TurtleBot3 maze navigation demo](assets/demo.gif)
+
 This repository is a ROS 1 Noetic and Gazebo simulation project for autonomous TurtleBot3 exploration in a maze. In `maze22.world`, the robot builds a map from LiDAR and odometry, explores unknown areas, plans collision-free paths, and stops when its camera detects the green goal.
 
 The project is intended for course experiments and algorithm demonstrations. It assembles existing ROS navigation components rather than implementing a new navigation stack.
