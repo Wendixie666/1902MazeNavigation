@@ -37,4 +37,23 @@ echo "Starting TurtleBot3 maze exploration..."
 echo "Workspace: $workspace_dir"
 echo "TurtleBot3 model: $TURTLEBOT3_MODEL"
 
-exec roslaunch my_launch maze_exploration.launch "$@"
+wall_thickness=""
+launch_args=()
+for launch_arg in "$@"; do
+    case "$launch_arg" in
+        wall_thickness:=*) wall_thickness="${launch_arg#wall_thickness:=}" ;;
+        *) launch_args+=("$launch_arg") ;;
+    esac
+done
+
+if [[ -n "$wall_thickness" ]]; then
+    world_file="$(mktemp --suffix=.world)"
+    trap 'rm -- "$world_file"' EXIT
+    python3 "$workspace_dir/src/my_maze_world/scripts/render_maze_world.py" \
+        "$workspace_dir/src/my_maze_world/worlds/maze22.world" \
+        "$world_file" "$wall_thickness"
+    launch_args+=("world_name:=$world_file")
+    roslaunch my_launch maze_exploration.launch "${launch_args[@]}"
+else
+    exec roslaunch my_launch maze_exploration.launch "${launch_args[@]}"
+fi

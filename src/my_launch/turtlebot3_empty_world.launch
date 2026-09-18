@@ -8,13 +8,14 @@
   <arg name="dynamic_obstacles" default="false"/>
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
+  <arg name="world_name" default="$(find my_maze_world)/worlds/maze22.world"/>
 
   <!-- Set GAZEBO_MODEL_PATH to include custom models -->
   <env name="GAZEBO_MODEL_PATH" value="$(find my_maze_world)/models:/usr/share/gazebo-11/models:$(optenv GAZEBO_MODEL_PATH /usr/share/gazebo-11/models)" />
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
 
-    <arg name="world_name" value="$(find my_maze_world)/worlds/maze22.world"/>
+    <arg name="world_name" value="$(arg world_name)"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="$(arg gui)"/>

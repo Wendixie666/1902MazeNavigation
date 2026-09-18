@@ -33,6 +33,12 @@ Dynamic obstacles are disabled by default. Pass launch arguments through the scr
 ./run_maze.sh dynamic_obstacles:=true
 ```
 
+Wall thickness defaults to 0.4 m from `maze22.world`. To try another value, pass it at startup; the script generates a temporary world without changing the source:
+
+```bash
+./run_maze.sh wall_thickness:=0.35
+```
+
 For a headless environment:
 
 ```bash

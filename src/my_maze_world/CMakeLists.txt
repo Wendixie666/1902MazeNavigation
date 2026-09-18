@@ -27,6 +27,7 @@ install(PROGRAMS
   scripts/dynamic_obstacles.py
   scripts/green_goal_detector.py
   scripts/person_walking.py
+  scripts/render_maze_world.py
   scripts/walking_person.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

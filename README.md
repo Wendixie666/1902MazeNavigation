@@ -33,6 +33,12 @@
 ./run_maze.sh dynamic_obstacles:=true
 ```
 
+墙厚默认采用 `maze22.world` 中的 0.4 米。可在启动时指定其他厚度；脚本会生成临时 world，不修改源码：
+
+```bash
+./run_maze.sh wall_thickness:=0.35
+```
+
 无图形界面的环境可以使用：
 
 ```bash
