@@ -21,6 +21,9 @@ def circular(center, radius, period, t):
     z = center[2]
     return x, y, z
 
+def scale_point(point, scale):
+    return point[0] * scale, point[1] * scale, point[2]
+
 def main():
     rospy.init_node('dynamic_obstacles_mover')
     rospy.wait_for_service('/gazebo/set_model_state')
@@ -33,6 +36,7 @@ def main():
     # run obstacles at a slower, synchronized rate
     rate_hz = rospy.get_param('~rate', 8.0)
     rate = rospy.Rate(rate_hz)
+    maze_scale = rospy.get_param('~maze_scale', 0.5)
 
     # slow periods to keep obstacles from moving too fast
     period1 = rospy.get_param('~period1', 12.0)  # was 6, slowed to 12s
@@ -42,15 +46,15 @@ def main():
     start_time = rospy.Time.now().to_sec()
 
     # trajectory definitions (match names in maze22.world)
-    obs1_start = (-8.0, -6.0, 0.3)
-    obs1_end   = (-4.0, -6.0, 0.3)
+    obs1_start = scale_point((-8.0, -6.0, 0.3), maze_scale)
+    obs1_end   = scale_point((-4.0, -6.0, 0.3), maze_scale)
 
-    obs2_start = (5.0, -8.0, 0.3)
-    obs2_end   = (5.0, -4.0, 0.3)
+    obs2_start = scale_point((5.0, -8.0, 0.3), maze_scale)
+    obs2_end   = scale_point((5.0, -4.0, 0.3), maze_scale)
 
     # Keep the circular path in the open southeast area of the maze.
-    obs3_center = (6.0, 8.0, 0.3)
-    obs3_radius = 0.8
+    obs3_center = scale_point((6.0, 8.0, 0.3), maze_scale)
+    obs3_radius = 0.8 * maze_scale
 
     rospy.loginfo('dynamic_obstacles_mover started (rate: %.1f Hz)', rate_hz)
 

@@ -1,8 +1,9 @@
 <launch>
  
   <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi]"/>
-  <arg name="x_pos" default="8.0"/>
-  <arg name="y_pos" default="9.0"/>
+  <arg name="x_pos" default="4.0"/>
+  <arg name="y_pos" default="4.5"/>
+  <arg name="maze_scale" default="0.5"/>
   <arg name="z_pos" default="0.0"/>
   <arg name="dynamic_obstacles" default="false"/>
   <arg name="gui" default="true"/>
@@ -34,5 +35,6 @@
     <param name="period1" value="12.0"/>
     <param name="period2" value="16.0"/>
     <param name="period3" value="20.0"/>
+    <param name="maze_scale" value="$(arg maze_scale)"/>
   </node>
 </launch>

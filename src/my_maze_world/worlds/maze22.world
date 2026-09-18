@@ -2,6 +2,8 @@
 <sdf version="1.6">
 <world name="maze_world">
 
+  <!-- Layout values: maze_scale=0.5 in x/y; wall_thickness=0.5 m. -->
+
   <include>
     <uri>model://sun</uri>
   </include>
@@ -12,112 +14,112 @@
 
   <!-- 外围墙 -->
 
-  <!-- 北墙分为两段，中心在 x=8 处留出小缺口（入口） -->
+  <!-- 北墙分为两段，中心在 x=4 处留出小缺口（入口） -->
   <model name="wall_north_left">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>17.5 0.3 1</size></box></geometry>
+        <geometry><box><size>8.75 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>17.5 0.3 1</size></box></geometry>
+        <geometry><box><size>8.75 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-1.25 10 0.5 0 0 0</pose>
+    <pose>-0.625 5 0.5 0 0 0</pose>
   </model>
 
   <model name="wall_north_right">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>1.5 0.3 1</size></box></geometry>
+        <geometry><box><size>0.75 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>1.5 0.3 1</size></box></geometry>
+        <geometry><box><size>0.75 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>9.25 10 0.5 0 0 0</pose>
+    <pose>4.625 5 0.5 0 0 0</pose>
   </model>
 
-  <!-- 南墙在 x=-8 处留出缺口（入口） -->
+  <!-- 南墙在 x=-4 处留出缺口（入口） -->
   <model name="wall_south_left">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>1.5 0.3 1</size></box></geometry>
+        <geometry><box><size>0.75 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>1.5 0.3 1</size></box></geometry>
+        <geometry><box><size>0.75 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-9.25 -10 0.5 0 0 0</pose>
+    <pose>-4.625 -5 0.5 0 0 0</pose>
   </model>
 
   <model name="wall_south_right">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>17.5 0.3 1</size></box></geometry>
+        <geometry><box><size>8.75 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>17.5 0.3 1</size></box></geometry>
+        <geometry><box><size>8.75 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>1.25 -10 0.5 0 0 0</pose>
+    <pose>0.625 -5 0.5 0 0 0</pose>
   </model>
 
-  <!-- 东墙分段，y=8 处留缺口（与北墙的缺口在同一对角） -->
+  <!-- 东墙分段，y=4 处留缺口（与北墙的缺口在同一对角） -->
   <model name="wall_east_bottom">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 17.5 1</size></box></geometry>
+        <geometry><box><size>0.5 8.75 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 17.5 1</size></box></geometry>
+        <geometry><box><size>0.5 8.75 1</size></box></geometry>
       </visual>
     </link>
-    <pose>10 -1.25 0.5 0 0 0</pose>
+    <pose>5 -0.625 0.5 0 0 0</pose>
   </model>
 
   <model name="wall_east_top">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 1.5 1</size></box></geometry>
+        <geometry><box><size>0.5 0.75 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 1.5 1</size></box></geometry>
+        <geometry><box><size>0.5 0.75 1</size></box></geometry>
       </visual>
     </link>
-    <pose>10 9.25 0.5 0 0 0</pose>
+    <pose>5 4.625 0.5 0 0 0</pose>
   </model>
 
-  <!-- 西墙分段，y=-8 处留缺口（与南墙的缺口在同一对角） -->
+  <!-- 西墙分段，y=-4 处留缺口（与南墙的缺口在同一对角） -->
   <model name="wall_west_bottom">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 1.5 1</size></box></geometry>
+        <geometry><box><size>0.5 0.75 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 1.5 1</size></box></geometry>
+        <geometry><box><size>0.5 0.75 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-10 -9.25 0.5 0 0 0</pose>
+    <pose>-5 -4.625 0.5 0 0 0</pose>
   </model>
 
   <model name="wall_west_top">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 17.5 1</size></box></geometry>
+        <geometry><box><size>0.5 8.75 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 17.5 1</size></box></geometry>
+        <geometry><box><size>0.5 8.75 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-10 1.25 0.5 0 0 0</pose>
+    <pose>-5 0.625 0.5 0 0 0</pose>
   </model>
 
 
@@ -127,13 +129,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>8 0.3 1</size></box></geometry>
+        <geometry><box><size>4 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>8 0.3 1</size></box></geometry>
+        <geometry><box><size>4 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-4 -5 0.5 0 0 0</pose>
+    <pose>-2 -2.5 0.5 0 0 0</pose>
   </model>
 
 
@@ -141,13 +143,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 8 1</size></box></geometry>
+        <geometry><box><size>0.5 4 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 8 1</size></box></geometry>
+        <geometry><box><size>0.5 4 1</size></box></geometry>
       </visual>
     </link>
-    <pose>2 -1 0.5 0 0 0</pose>
+    <pose>1 -0.5 0.5 0 0 0</pose>
   </model>
 
 
@@ -155,13 +157,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>8 0.3 1</size></box></geometry>
+        <geometry><box><size>4 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>8 0.3 1</size></box></geometry>
+        <geometry><box><size>4 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>4 3 0.5 0 0 0</pose>
+    <pose>2 1.5 0.5 0 0 0</pose>
   </model>
 
 
@@ -169,13 +171,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 8 1</size></box></geometry>
+        <geometry><box><size>0.5 4 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 8 1</size></box></geometry>
+        <geometry><box><size>0.5 4 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-3 5 0.5 0 0 0</pose>
+    <pose>-1.5 2.5 0.5 0 0 0</pose>
   </model>
 
 
@@ -183,13 +185,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>6 0.3 1</size></box></geometry>
+        <geometry><box><size>3 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>6 0.3 1</size></box></geometry>
+        <geometry><box><size>3 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-6 1 0.5 0 0 0</pose>
+    <pose>-3 0.5 0.5 0 0 0</pose>
   </model>
 
 
@@ -197,13 +199,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 6 1</size></box></geometry>
+        <geometry><box><size>0.5 3 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 6 1</size></box></geometry>
+        <geometry><box><size>0.5 3 1</size></box></geometry>
       </visual>
     </link>
-    <pose>6 -4 0.5 0 0 0</pose>
+    <pose>3 -2 0.5 0 0 0</pose>
   </model>
 
 
@@ -211,13 +213,13 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>5 0.3 1</size></box></geometry>
+        <geometry><box><size>2.5 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>5 0.3 1</size></box></geometry>
+        <geometry><box><size>2.5 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>1 7 0.5 0 0 0</pose>
+    <pose>0.5 3.5 0.5 0 0 0</pose>
   </model>
 
   <!-- 新增内部墙以增加复杂度 -->
@@ -225,65 +227,65 @@
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 6 1</size></box></geometry>
+        <geometry><box><size>0.5 3 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 6 1</size></box></geometry>
+        <geometry><box><size>0.5 3 1</size></box></geometry>
       </visual>
     </link>
-    <pose>0 4 0.5 0 0 0</pose>
+    <pose>0 2 0.5 0 0 0</pose>
   </model>
 
   <model name="maze_wall9">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>4 0.3 1</size></box></geometry>
+        <geometry><box><size>2 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>4 0.3 1</size></box></geometry>
+        <geometry><box><size>2 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-2 2 0.5 0 0 0</pose>
+    <pose>-1 1 0.5 0 0 0</pose>
   </model>
 
   <model name="maze_wall10">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>0.3 5 1</size></box></geometry>
+        <geometry><box><size>0.5 2.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>0.3 5 1</size></box></geometry>
+        <geometry><box><size>0.5 2.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>3 -2 0.5 0 0 0</pose>
+    <pose>1.5 -1 0.5 0 0 0</pose>
   </model>
 
   <model name="maze_wall11">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>3 0.3 1</size></box></geometry>
+        <geometry><box><size>1.5 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>3 0.3 1</size></box></geometry>
+        <geometry><box><size>1.5 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>-5 -3 0.5 0 0 0</pose>
+    <pose>-2.5 -1.5 0.5 0 0 0</pose>
   </model>
 
   <model name="maze_wall12">
     <static>true</static>
     <link name="link">
       <collision name="collision">
-        <geometry><box><size>2 0.3 1</size></box></geometry>
+        <geometry><box><size>1 0.5 1</size></box></geometry>
       </collision>
       <visual name="visual">
-        <geometry><box><size>2 0.3 1</size></box></geometry>
+        <geometry><box><size>1 0.5 1</size></box></geometry>
       </visual>
     </link>
-    <pose>6 6 0.5 0 0 0</pose>
+    <pose>3 3 0.5 0 0 0</pose>
   </model>
 
   <!-- Green visual goal: placed in the eastern corridor without blocking the entrance. -->
@@ -292,12 +294,12 @@
     <link name="link">
       <collision name="collision">
         <geometry>
-          <box><size>0.7 0.7 0.7</size></box>
+          <box><size>0.35 0.35 0.35</size></box>
         </geometry>
       </collision>
       <visual name="visual">
         <geometry>
-          <box><size>0.7 0.7 0.7</size></box></geometry>
+          <box><size>0.35 0.35 0.35</size></box></geometry>
         <material>
           <ambient>0.05 0.9 0.05 1</ambient>
           <diffuse>0.05 0.9 0.05 1</diffuse>
@@ -305,7 +307,7 @@
         </material>
       </visual>
     </link>
-    <pose>8.5 5.0 0.35 0 0 0</pose>
+    <pose>3.0 3.5 0.175 0 0 0</pose>
   </model>
 
   <!-- Dynamic obstacles placeholders: created so controllers can update their ModelState -->
@@ -332,7 +334,7 @@
         </material>
       </visual>
     </link>
-    <pose>-8 -6 0.3 0 0 0</pose>
+    <pose>-4 -3 0.3 0 0 0</pose>
   </model>
 
   <model name="dynamic_obstacle_2">
@@ -358,7 +360,7 @@
         </material>
       </visual>
     </link>
-    <pose>5 -8 0.3 0 0 0</pose>
+    <pose>2.5 -4 0.3 0 0 0</pose>
   </model>
 
   <model name="dynamic_obstacle_3">
@@ -384,7 +386,7 @@
         </material>
       </visual>
     </link>
-    <pose>6.8 8 0.3 0 0 0</pose>
+    <pose>3.4 4 0.3 0 0 0</pose>
   </model>
 
 </world>

@@ -35,6 +35,9 @@ def quaternion_from_yaw(yaw):
     qz = math.sin(half_yaw)
     return qw, qx, qy, qz
 
+def scale_point(point, scale):
+    return point[0] * scale, point[1] * scale, point[2]
+
 def main():
     rospy.init_node('walking_person_mover')
     rospy.wait_for_service('/gazebo/set_model_state')
@@ -43,46 +46,47 @@ def main():
     # target update rate (slowed to match other obstacles)
     rate_hz = rospy.get_param('~rate', 8.0)
     rate = rospy.Rate(rate_hz)
+    maze_scale = rospy.get_param('~maze_scale', 0.5)
 
     # Define safe walking paths through the maze that avoid walls
     # These waypoints are carefully chosen to navigate through the maze safely
     # without colliding with walls
     
     # Path segments designed to avoid all wall collisions
-    seg1_start = (8.0, 8.0, 0.85)
-    seg1_end = (8.0, -6.0, 0.85)
+    seg1_start = scale_point((8.0, 8.0, 0.85), maze_scale)
+    seg1_end = scale_point((8.0, -6.0, 0.85), maze_scale)
     seg1_period = 18.0
     
-    seg2_start = (8.0, -6.0, 0.85)
-    seg2_end = (6.0, -6.0, 0.85)
+    seg2_start = scale_point((8.0, -6.0, 0.85), maze_scale)
+    seg2_end = scale_point((6.0, -6.0, 0.85), maze_scale)
     seg2_period = 3.0
     
-    seg3_start = (6.0, -6.0, 0.85)
-    seg3_end = (6.0, -2.0, 0.85)
+    seg3_start = scale_point((6.0, -6.0, 0.85), maze_scale)
+    seg3_end = scale_point((6.0, -2.0, 0.85), maze_scale)
     seg3_period = 6.0
     
-    seg4_start = (6.0, -2.0, 0.85)
-    seg4_end = (-1.0, -2.0, 0.85)
+    seg4_start = scale_point((6.0, -2.0, 0.85), maze_scale)
+    seg4_end = scale_point((-1.0, -2.0, 0.85), maze_scale)
     seg4_period = 10.0
     
-    seg5_start = (-1.0, -2.0, 0.85)
-    seg5_end = (-1.0, 5.0, 0.85)
+    seg5_start = scale_point((-1.0, -2.0, 0.85), maze_scale)
+    seg5_end = scale_point((-1.0, 5.0, 0.85), maze_scale)
     seg5_period = 10.0
     
-    seg6_start = (-1.0, 5.0, 0.85)
-    seg6_end = (5.0, 5.0, 0.85)
+    seg6_start = scale_point((-1.0, 5.0, 0.85), maze_scale)
+    seg6_end = scale_point((5.0, 5.0, 0.85), maze_scale)
     seg6_period = 8.0
     
-    seg7_start = (5.0, 5.0, 0.85)
-    seg7_end = (5.0, 2.0, 0.85)
+    seg7_start = scale_point((5.0, 5.0, 0.85), maze_scale)
+    seg7_end = scale_point((5.0, 2.0, 0.85), maze_scale)
     seg7_period = 5.0
     
-    seg8_start = (5.0, 2.0, 0.85)
-    seg8_end = (8.0, 2.0, 0.85)
+    seg8_start = scale_point((5.0, 2.0, 0.85), maze_scale)
+    seg8_end = scale_point((8.0, 2.0, 0.85), maze_scale)
     seg8_period = 5.0
     
-    seg9_start = (8.0, 2.0, 0.85)
-    seg9_end = (8.0, 8.0, 0.85)
+    seg9_start = scale_point((8.0, 2.0, 0.85), maze_scale)
+    seg9_end = scale_point((8.0, 8.0, 0.85), maze_scale)
     seg9_period = 8.0
 
     segments = [
@@ -108,7 +112,7 @@ def main():
         cycle_time = now % total_period
         
         # Find which segment we're in
-        current_pos = (8.0, 8.0, 0.85)
+        current_pos = scale_point((8.0, 8.0, 0.85), maze_scale)
         current_yaw = 0
         elapsed = 0
         
@@ -148,4 +152,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

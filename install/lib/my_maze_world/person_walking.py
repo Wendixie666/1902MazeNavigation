@@ -30,6 +30,9 @@ def quaternion_from_yaw(yaw):
     qz = math.sin(half_yaw)
     return qw, qx, qy, qz
 
+def scale_point(point, scale):
+    return point[0] * scale, point[1] * scale, point[2]
+
 def main():
     rospy.init_node('person_walking_mover')
     rospy.wait_for_service('/gazebo/set_model_state')
@@ -38,14 +41,15 @@ def main():
     # set slow actor update to 8 Hz to match other obstacles
     rate_hz = rospy.get_param('~rate', 8.0)
     rate = rospy.Rate(rate_hz)
+    maze_scale = rospy.get_param('~maze_scale', 0.5)
 
     # safe, slow path avoiding walls (kept well within free corridors)
     segs = [
-        ((-1.5, -6.5, 0.85), (-1.5, -2.5, 0.85), 20.0),
-        ((-1.5, -2.5, 0.85), (2.5, -2.5, 0.85), 12.0),
-        ((2.5, -2.5, 0.85), (2.5, 2.5, 0.85), 14.0),
-        ((2.5, 2.5, 0.85), (-1.5, 2.5, 0.85), 12.0),
-        ((-1.5, 2.5, 0.85), (-1.5, -6.5, 0.85), 18.0),
+        (scale_point((-1.5, -6.5, 0.85), maze_scale), scale_point((-1.5, -2.5, 0.85), maze_scale), 20.0),
+        (scale_point((-1.5, -2.5, 0.85), maze_scale), scale_point((2.5, -2.5, 0.85), maze_scale), 12.0),
+        (scale_point((2.5, -2.5, 0.85), maze_scale), scale_point((2.5, 2.5, 0.85), maze_scale), 14.0),
+        (scale_point((2.5, 2.5, 0.85), maze_scale), scale_point((-1.5, 2.5, 0.85), maze_scale), 12.0),
+        (scale_point((-1.5, 2.5, 0.85), maze_scale), scale_point((-1.5, -6.5, 0.85), maze_scale), 18.0),
     ]
 
     total = sum(p for _,_,p in segs)

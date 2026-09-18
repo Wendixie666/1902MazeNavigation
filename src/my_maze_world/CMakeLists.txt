@@ -23,6 +23,7 @@ catkin_package(CATKIN_DEPENDS
 
 # Install executable Python nodes
 install(PROGRAMS
+  scripts/compare_planners.py
   scripts/dynamic_obstacles.py
   scripts/green_goal_detector.py
   scripts/person_walking.py

@@ -1,12 +1,14 @@
 <launch>
   <arg name="model" default="waffle" doc="model type [waffle, waffle_pi, burger]"/>
   <arg name="dynamic_obstacles" default="false"/>
+  <arg name="maze_scale" default="0.5"/>
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
 
   <include file="$(find my_launch)/turtlebot3_empty_world.launch">
     <arg name="model" value="$(arg model)"/>
     <arg name="dynamic_obstacles" value="$(arg dynamic_obstacles)"/>
+    <arg name="maze_scale" value="$(arg maze_scale)"/>
     <arg name="gui" value="$(arg gui)"/>
     <arg name="headless" value="$(arg headless)"/>
   </include>

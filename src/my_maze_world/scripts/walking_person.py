@@ -35,6 +35,9 @@ def quaternion_from_yaw(yaw):
     qz = math.sin(half_yaw)
     return qw, qx, qy, qz
 
+def scale_point(point, scale):
+    return point[0] * scale, point[1] * scale, point[2]
+
 def main():
     rospy.init_node('walking_person_mover')
     rospy.wait_for_service('/gazebo/set_model_state')
@@ -43,22 +46,23 @@ def main():
     # target update rate (slowed to match other obstacles)
     rate_hz = rospy.get_param('~rate', 8.0)
     rate = rospy.Rate(rate_hz)
+    maze_scale = rospy.get_param('~maze_scale', 0.5)
 
     # Keep the loop in the open area east of the maze walls.
-    seg1_start = (7.8, 4.0, 0.85)
-    seg1_end = (7.8, 8.0, 0.85)
+    seg1_start = scale_point((7.8, 4.0, 0.85), maze_scale)
+    seg1_end = scale_point((7.8, 8.0, 0.85), maze_scale)
     seg1_period = 8.0
 
-    seg2_start = (7.8, 8.0, 0.85)
-    seg2_end = (9.2, 8.0, 0.85)
+    seg2_start = scale_point((7.8, 8.0, 0.85), maze_scale)
+    seg2_end = scale_point((9.2, 8.0, 0.85), maze_scale)
     seg2_period = 4.0
 
-    seg3_start = (9.2, 8.0, 0.85)
-    seg3_end = (9.2, 4.0, 0.85)
+    seg3_start = scale_point((9.2, 8.0, 0.85), maze_scale)
+    seg3_end = scale_point((9.2, 4.0, 0.85), maze_scale)
     seg3_period = 8.0
 
-    seg4_start = (9.2, 4.0, 0.85)
-    seg4_end = (7.8, 4.0, 0.85)
+    seg4_start = scale_point((9.2, 4.0, 0.85), maze_scale)
+    seg4_end = scale_point((7.8, 4.0, 0.85), maze_scale)
     seg4_period = 4.0
 
     segments = [
