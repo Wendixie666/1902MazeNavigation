@@ -1,56 +1,36 @@
-# TurtleBot3 迷宫导航 / Maze Navigation with TurtleBot3
+# TurtleBot3 迷宫导航
+
+[English](README.en.md)
 
 本仓库是一个基于 ROS 1 / Gazebo 的迷宫导航课程项目，保留了原始的
 TurtleBot3 仿真和动态障碍物实验；它不是一个全新的导航栈实现。
 
-This repository contains a ROS 1 / Gazebo maze-navigation course project. It
-preserves the original TurtleBot3 simulation and its dynamic obstacle
-experiments; it is not a new navigation-stack implementation.
-
-## 项目内容 / What is included
+## 项目内容
 
 - 基于 `maze22.world` 的 Gazebo 迷宫环境。
-  A Gazebo maze environment based on `maze22.world`.
 - 使用 `turtlebot3_description` 生成的 TurtleBot3。
-  A TurtleBot3 spawned from `turtlebot3_description`.
 - 通过 Gazebo 的 `/gazebo/set_model_state` 服务控制的三个移动圆柱障碍物。
-  Three moving cylinder obstacles controlled through Gazebo's
-  `/gazebo/set_model_state` service.
 - 两个动画行走角色，每个角色由独立的 Python 节点控制。
-  Two animated walking actors, each controlled by its own Python node.
 - 使用 `/scan`、`/odom` 和标准 TurtleBot3 TF 链的 GMapping SLAM。
-  GMapping SLAM using `/scan`, `/odom`, and the standard TurtleBot3 TF chain.
 - 使用 `explore_lite` 进行前沿探索，并向 `move_base` 发送目标。
-  `explore_lite` frontier exploration sending goals to `move_base`.
 - 配置为使用 A* 的 `global_planner/GlobalPlanner`，其中 `use_dijkstra: false`。
-  `global_planner/GlobalPlanner` configured for A* with `use_dijkstra: false`.
 - 一个名为 `green_goal` 的绿色方块，以及一个在连续检测到绿色若干次后结束运行的 RGB 相机检测器。
-  A green cube named `green_goal` and an RGB camera detector that ends the run
-  after several consecutive green detections.
 
-## 技术和运行环境 / Technology and environment
+## 技术和运行环境
 
-- ROS Noetic（ROS 1） / ROS Noetic (ROS 1)
+- ROS Noetic（ROS 1）
 - Ubuntu 20.04
 - Gazebo
-- TurtleBot3 软件包 / TurtleBot3 packages
-- Python 3 和 `rospy` / Python 3 and `rospy`
+- TurtleBot3 软件包
+- Python 3 和 `rospy`
 
 仓库包含基于 `docker.io/osrf/ros:noetic-desktop-full-focal` 的 Dev Container 配置。
 使用 VS Code 和 Dev Containers 扩展打开仓库，然后选择 **Reopen in Container**。
 必须提前安装 Docker；如果需要 Gazebo 图形界面，容器还必须能够访问显示设备。
 
-The repository includes a Dev Container configuration based on
-`docker.io/osrf/ros:noetic-desktop-full-focal`. Open the repository in VS Code
-with the Dev Containers extension and choose **Reopen in Container**. Docker
-must already be installed and the container must have access to a display if
-the Gazebo GUI is required.
-
-## 构建和运行 / Build and run
+## 构建和运行
 
 在仓库根目录并进入 ROS Noetic 环境后执行：
-
-From the repository root, inside the ROS Noetic environment:
 
 ```bash
 source /opt/ros/noetic/setup.bash
@@ -65,23 +45,13 @@ roslaunch my_launch maze_exploration.launch
 检测器使用的 RGB-D 相机。为了验证导航链路，动态角色默认处于禁用状态；可以使用
 以下命令启用：
 
-The unified launch starts Gazebo, the TurtleBot3, GMapping, `move_base`,
-`explore_lite`, and the green-goal detector. The default `waffle` model is
-intentional because its official Gazebo description provides the RGB-D camera
-used by the detector. Dynamic actors are disabled by default while validating
-the navigation chain; enable them with:
-
 ```bash
 roslaunch my_launch maze_exploration.launch dynamic_obstacles:=true
 ```
 
 对于没有显示设备的容器，可以使用 `gui:=false headless:=true`。
 
-For a display-less container, use `gui:=false headless:=true`.
-
 算法流程如下：
-
-The algorithm flow is:
 
 ```text
 LiDAR + Odometry
@@ -103,9 +73,6 @@ Global Planner (A*) → Local Planner (DWA)
 `/green_goal_detected`，取消当前的 `move_base` 目标，停止 `explore_lite` 节点，
 并持续发布零速度。
 
-When the RGB detector sees the green cube in five consecutive frames, it
-publishes latched `/green_goal_detected`, cancels the current move_base goal,
-stops the `explore_lite` node, and continuously publishes zero velocity.
 
 ## 规划器性能对比 / Planner performance comparison
 
