@@ -2,35 +2,24 @@
 
 [English](README.en.md)
 
-本仓库是一个基于 ROS 1 / Gazebo 的迷宫导航课程项目，保留了原始的
-TurtleBot3 仿真和动态障碍物实验；它不是一个全新的导航栈实现。
+这是一个基于 ROS 1 Noetic 和 Gazebo 的 TurtleBot3 迷宫自主探索仿真项目。机器人在 `maze22.world` 中使用激光雷达和里程计建图，自动探索未知区域、规划路径并避开障碍物，直到相机检测到绿色目标。
 
-## 项目内容
+本项目主要用于课程实验和算法演示，组合使用现有 ROS 导航组件，并不是重新实现一套导航框架。
 
-- 基于 `maze22.world` 的 Gazebo 迷宫环境。
-- 使用 `turtlebot3_description` 生成的 TurtleBot3。
-- 通过 Gazebo 的 `/gazebo/set_model_state` 服务控制的三个移动圆柱障碍物。
-- 两个动画行走角色，每个角色由独立的 Python 节点控制。
-- 使用 `/scan`、`/odom` 和标准 TurtleBot3 TF 链的 GMapping SLAM。
-- 使用 `explore_lite` 进行前沿探索，并向 `move_base` 发送目标。
-- 配置为使用 A* 的 `global_planner/GlobalPlanner`，其中 `use_dijkstra: false`。
-- 一个名为 `green_goal` 的绿色方块，以及一个在连续检测到绿色若干次后结束运行的 RGB 相机检测器。
+## 核心功能
 
-## 技术和运行环境
+- GMapping SLAM：根据 `/scan` 和 `/odom` 构建占据栅格地图。
+- `explore_lite`：选择前沿区域并交给 `move_base` 导航。
+- `move_base`：使用 A* 全局规划器和 DWA 局部规划器生成速度指令。
+- Gazebo 迷宫：包含墙体、绿色目标、移动圆柱障碍物和行走角色。
+- 目标检测：连续检测到绿色目标 5 帧后，取消导航并停止机器人。
+- 规划器对比：可独立比较 Dijkstra 和 A* 的路径与搜索开销。
 
-- ROS Noetic（ROS 1）
-- Ubuntu 20.04
-- Gazebo
-- TurtleBot3 软件包
-- Python 3 和 `rospy`
+## 快速开始
 
-仓库包含基于 `docker.io/osrf/ros:noetic-desktop-full-focal` 的 Dev Container 配置。
-使用 VS Code 和 Dev Containers 扩展打开仓库，然后选择 **Reopen in Container**。
-必须提前安装 Docker；如果需要 Gazebo 图形界面，容器还必须能够访问显示设备。
+环境要求：ROS Noetic、Gazebo、TurtleBot3 软件包和 Python 3。也可以使用仓库内的 `.devcontainer/` 配置。
 
-## 构建和运行
-
-在仓库根目录并进入 ROS Noetic 环境后执行：
+在仓库根目录执行：
 
 ```bash
 source /opt/ros/noetic/setup.bash
@@ -40,139 +29,47 @@ export TURTLEBOT3_MODEL=waffle
 roslaunch my_launch maze_exploration.launch
 ```
 
-统一启动文件会启动 Gazebo、TurtleBot3、GMapping、`move_base`、`explore_lite` 和
-绿色目标检测器。默认使用 `waffle` 模型是有意为之，因为其官方 Gazebo 描述提供了
-检测器使用的 RGB-D 相机。为了验证导航链路，动态角色默认处于禁用状态；可以使用
-以下命令启用：
+默认不启动动态障碍物。需要启用时：
 
 ```bash
 roslaunch my_launch maze_exploration.launch dynamic_obstacles:=true
 ```
 
-对于没有显示设备的容器，可以使用 `gui:=false headless:=true`。
+无图形界面的环境可以使用：
 
-算法流程如下：
-
-```text
-LiDAR + Odometry
-        ↓
-     GMapping
-        ↓
- Occupancy Grid (/map)
-        ↓
-Frontier Exploration (explore_lite)
-        ↓
-    move_base
-        ↓
-Global Planner (A*) → Local Planner (DWA)
-        ↓
-     /cmd_vel
+```bash
+roslaunch my_launch maze_exploration.launch gui:=false headless:=true
 ```
 
-当 RGB 检测器在连续五帧中检测到绿色方块时，它会发布锁存的
-`/green_goal_detected`，取消当前的 `move_base` 目标，停止 `explore_lite` 节点，
-并持续发布零速度。
+## 导航流程
 
+```text
+LiDAR + Odometry → GMapping → Occupancy Grid
+                              ↓
+       explore_lite → move_base (A* + DWA) → /cmd_vel
+                              ↑
+                   RGB Camera → Green Goal Detector
+```
 
-## 规划器性能对比 / Planner performance comparison
+## 目录结构
 
-独立基准测试会在同一个四方向网格迷宫上比较 Dijkstra 和 A*，并报告路径长度、
-规划时间、扩展节点数以及 Python 峰值内存分配：
+```text
+src/
+├── my_launch/
+│   ├── launch/maze_exploration.launch  # 完整仿真入口
+│   └── config/                         # SLAM、代价地图和规划器参数
+└── my_maze_world/
+    ├── worlds/maze22.world             # 主迷宫世界
+    ├── models/                         # Gazebo 模型
+    └── scripts/                        # 障碍物、行走角色和目标检测节点
+```
 
-The standalone benchmark compares Dijkstra and A* on the same four-direction
-grid maze. It reports path length, planning time, expanded nodes, and peak
-Python memory allocation:
+## 规划器基准测试
 
 ```bash
 python3 src/my_maze_world/scripts/compare_planners.py
 python3 src/my_maze_world/scripts/compare_planners.py --csv results.csv
 ```
 
-执行 `catkin_make` 后，也可以使用以下命令运行：
+基准测试在同一个网格迷宫上比较 Dijkstra 和 A*，输出路径长度、规划时间和扩展节点数等指标。
 
-After `catkin_make`, it can also be run as:
-
-```bash
-rosrun my_maze_world compare_planners.py
-```
-
-## 项目结构 / Project layout
-
-```text
-.
-├── .devcontainer/                 ROS Noetic Dev Container 配置 / definition
-├── src/
-│   ├── my_launch/                 启动文件包 / launch package
-│   │   ├── config/                 导航参数 / navigation parameters
-│   │   ├── launch/maze_exploration.launch
-│   │   └── turtlebot3_empty_world.launch
-│   └── my_maze_world/             世界、模型和 Python 节点 / worlds, models, and Python nodes
-│       ├── models/
-│       ├── scripts/
-│       │   ├── dynamic_obstacles.py
-│       │   ├── green_goal_detector.py
-│       │   ├── person_walking.py
-│       │   └── walking_person.py
-│       └── worlds/
-│           ├── maze11.world       较旧的备用迷宫 / older/alternate maze world
-│           └── maze22.world       主启动文件使用的世界 / world used by the main launch file
-└── LICENSE
-```
-
-## 重要文件 / Important files
-
-- `maze_exploration.launch`：完整的自主探索入口。
-  The complete autonomous exploration entry point.
-- `turtlebot3_empty_world.launch`：仅启动 Gazebo 和机器人的基础启动文件。
-  The Gazebo and robot-only base launch.
-- `maze22.world`：当前使用的迷宫、绿色目标、三个占位障碍物模型和两个角色定义。
-  The active maze, green goal, three placeholder obstacle
-  models, and two actor definitions.
-- `maze11.world`：为历史/参考用途保留；当前启动文件不会加载它。
-  Retained for historical/reference purposes; it is not loaded
-  by the current launch file.
-- `dynamic_obstacles.py`：移动 `dynamic_obstacle_1`、`dynamic_obstacle_2` 和
-  `dynamic_obstacle_3`。
-  Moves `dynamic_obstacle_1`,
-  `dynamic_obstacle_2`, and `dynamic_obstacle_3`.
-- `walking_person.py`：移动 `walking_person` 角色。
-  Moves the `walking_person` actor.
-- `person_walking.py`：移动独立的 `person_walking` 角色。
-  Moves the separate `person_walking` actor.
-- `models/walkingperson` 和 `models/walking_person`：`maze22.world` 都需要这两个目录；
-  目录名属于 Gazebo 模型 URI 的一部分。
-  Both are required by
-  `maze22.world`; their directory names are part of the Gazebo model URIs.
-
-## 可复现性说明和限制 / Reproducibility notes and limitations
-
-在 Noetic 容器中使用以下命令安装 ROS 二进制依赖：
-
-Install the ROS binary dependencies in the Noetic container with:
-
-```bash
-apt-get update
-apt-get install -y ros-noetic-turtlebot3 ros-noetic-turtlebot3-slam \
-  ros-noetic-turtlebot3-navigation ros-noetic-slam-gmapping \
-  ros-noetic-move-base ros-noetic-global-planner ros-noetic-map-server \
-  ros-noetic-explore-lite ros-noetic-cv-bridge ros-noetic-image-transport \
-  python3-opencv
-```
-
-运行行为取决于环境中可用的 ROS Noetic、Gazebo 和 TurtleBot3 版本。启动后请确认
-`/scan`、`/odom`、`/map`、`/camera/rgb/image_raw` 和 `/move_base/status`。
-可以使用以下命令检查当前启用的全局规划器：
-
-The runtime behavior depends on the ROS Noetic, Gazebo, and TurtleBot3 versions
-available in the environment. Verify `/scan`, `/odom`, `/map`,
-`/camera/rgb/image_raw`, and `/move_base/status` while the launch is running.
-The active global planner can be checked with:
-
-```bash
-rosparam get /move_base/base_global_planner
-rosparam get /move_base/GlobalPlanner/use_dijkstra
-```
-
-预期值分别为 `global_planner/GlobalPlanner` 和 `false`。
-
-The expected values are `global_planner/GlobalPlanner` and `false`.
