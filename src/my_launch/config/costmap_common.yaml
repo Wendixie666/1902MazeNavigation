@@ -1,5 +1,5 @@
 transform_tolerance: 0.5
-robot_radius: 0.22
+robot_radius: 0.25
 obstacle_range: 3.0
 raytrace_range: 3.5
 observation_sources: scan
@@ -11,5 +11,5 @@ scan:
   clearing: true
   inf_is_valid: true
 
-inflation_radius: 0.25
+inflation_radius: 0.30
 cost_scaling_factor: 3.0

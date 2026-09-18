@@ -31,9 +31,6 @@ install(PROGRAMS
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-# Install Gazebo worlds and custom models
-install(DIRECTORY
-  models/
-  worlds/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+# Keep the installed paths consistent with $(find my_maze_world) in launch files.
+install(DIRECTORY models/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/models)
+install(DIRECTORY worlds/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/worlds)

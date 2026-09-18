@@ -19,6 +19,7 @@ set -u
 export ROS_MASTER_URI="${ROS_MASTER_URI:-http://localhost:11311}"
 export ROS_HOSTNAME="${ROS_HOSTNAME:-localhost}"
 export TURTLEBOT3_MODEL="${TURTLEBOT3_MODEL:-waffle}"
+export LIBGL_ALWAYS_SOFTWARE=1
 
 # Build the catkin workspace on first run.
 if [[ ! -f "$workspace_dir/devel/setup.bash" ]]; then

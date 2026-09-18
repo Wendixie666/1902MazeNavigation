@@ -1,6 +1,7 @@
 # Catkin workspace output
 /build/
 /devel/
+/install/
 /logs/
 /src/CMakeLists.txt
 

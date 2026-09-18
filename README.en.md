@@ -25,6 +25,8 @@ Run one command from the repository root. The script loads the ROS environment, 
 ./run_maze.sh
 ```
 
+The script enables software rendering by default to prevent the Gazebo window from hanging with the container's default graphics driver. Rendering will use the CPU.
+
 Dynamic obstacles are disabled by default. Pass launch arguments through the script:
 
 ```bash
