@@ -35,14 +35,4 @@
     <param name="period2" value="16.0"/>
     <param name="period3" value="20.0"/>
   </node>
-  
-  <!-- 启动行走的人的移动节点 (15Hz 更新频率，动态障碍) -->
-  <node if="$(arg dynamic_obstacles)" name="walking_person" pkg="my_maze_world" type="walking_person.py" output="screen" respawn="false">
-    <param name="rate" value="8.0"/>
-  </node>
-  
-  <!-- 启动用户指定的 person_walking 动态障碍控制节点（慢速） -->
-  <node if="$(arg dynamic_obstacles)" name="person_walking" pkg="my_maze_world" type="person_walking.py" output="screen" respawn="false">
-    <param name="rate" value="8.0"/>
-  </node>
 </launch>

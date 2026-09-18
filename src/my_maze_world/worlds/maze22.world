@@ -308,50 +308,6 @@
     <pose>8.5 5.0 0.35 0 0 0</pose>
   </model>
 
-  <!-- 行走的人模型 (Actor with animation) -->
-  <actor name="walking_person">
-    <pose>0 0 0 0 0 0</pose>
-    <scale>1 1 1</scale>
-    <link name="link">
-      <inertial>
-        <mass>70.0</mass>
-        <inertia>
-          <ixx>5.0</ixx>
-          <ixy>0.0</ixy>
-          <ixz>0.0</ixz>
-          <iyy>5.0</iyy>
-          <iyz>0.0</iyz>
-          <izz>1.0</izz>
-        </inertia>
-      </inertial>
-      <collision name="collision">
-        <geometry>
-          <cylinder>
-            <radius>0.2</radius>
-            <length>1.7</length>
-          </cylinder>
-        </geometry>
-      </collision>
-      <visual name="visual">
-        <geometry>
-          <mesh>
-            <uri>model://walkingperson/meshes/walk.dae</uri>
-            <scale>1 1 1</scale>
-          </mesh>
-        </geometry>
-      </visual>
-    </link>
-    <script>
-      <loop>true</loop>
-      <auto_start>true</auto_start>
-      <animation name="walking">
-        <filename>model://walkingperson/meshes/walk.dae</filename>
-        <scale>1.0</scale>
-        <interpolate_x>true</interpolate_x>
-      </animation>
-    </script>
-  </actor>
-
   <!-- Dynamic obstacles placeholders: created so controllers can update their ModelState -->
   <model name="dynamic_obstacle_1">
     <link name="link">
@@ -430,47 +386,6 @@
     </link>
     <pose>6.8 8 0.3 0 0 0</pose>
   </model>
-
-  <!-- 新增指定的 person_walking actor（慢速，包含给定初始状态与动画、skin） -->
-  <actor name="person_walking">
-    <pose>-1.95404 -6.51874 -1e-06 -2e-06 1e-06 0.000303</pose>
-    <scale>1 1 1</scale>
-    <link name="link">
-      <pose>-1.95404 -6.51874 -1e-06 -2e-06 1e-06 0.000303</pose>
-      <velocity>0 0 0 0 -0 0</velocity>
-      <acceleration>0.961451 2.02745 -2.70374 -2.11476 1.05371 0.105404</acceleration>
-      <wrench>76.9161 162.196 -216.299 0 -0 0</wrench>
-      <collision name="collision">
-        <geometry>
-          <cylinder>
-            <radius>0.2</radius>
-            <length>1.7</length>
-          </cylinder>
-        </geometry>
-      </collision>
-      <visual name="visual">
-        <geometry>
-          <mesh>
-            <uri>model://walking_person/meshes/walk.dae</uri>
-            <scale>1 1 1</scale>
-          </mesh>
-        </geometry>
-      </visual>
-    </link>
-    <skin>
-      <filename>model://walking_person/meshes/walk.dae</filename>
-      <scale>1</scale>
-    </skin>
-    <script>
-      <loop>true</loop>
-      <auto_start>true</auto_start>
-      <animation name="walking">
-        <filename>model://walking_person/meshes/walk.dae</filename>
-        <scale>1</scale>
-        <interpolate_x>true</interpolate_x>
-      </animation>
-    </script>
-  </actor>
 
 </world>
 </sdf>
