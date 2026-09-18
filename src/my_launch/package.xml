@@ -9,5 +9,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>turtlebot3_description</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>my_maze_world</exec_depend>
 </package>

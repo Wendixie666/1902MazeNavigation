@@ -6,7 +6,7 @@ This repository is a ROS 1 catkin workspace. The top-level `src/` directory cont
 
 - `my_maze_world/`: Gazebo worlds (`worlds/`), custom models (`models/`), and Python nodes for dynamic obstacles and walking people (`scripts/`).
 - `my_launch/`: launch files for the TurtleBot3 and maze simulation.
-- `get-docker.sh`: environment setup helper.
+- `.devcontainer/`: reproducible ROS Noetic development environment definition.
 
 There is no committed `test/` directory or automated test suite. Treat simulation runs as the primary integration check.
 

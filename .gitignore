@@ -1,0 +1,19 @@
+# Catkin workspace output
+/build/
+/devel/
+/logs/
+/src/CMakeLists.txt
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+
+# ROS and Gazebo runtime output
+.ros/
+.gazebo/
+*.bag
+*.bag.active
+*.db3
+*.log
+gazebo-*.log
+
