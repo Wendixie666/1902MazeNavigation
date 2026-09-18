@@ -19,6 +19,8 @@
 
 环境要求：ROS Noetic、Gazebo、TurtleBot3 软件包和 Python 3。也可以使用仓库内的 `.devcontainer/` 配置。
 
+首次使用 Docker 或 Dev Container 时，请先按 [Docker / Dev Container 环境配置](docs/docker-setup.md) 安装依赖并验证环境。
+
 在仓库根目录执行一条命令即可启动。脚本会自动加载 ROS 环境、设置默认机器人型号，并在首次运行时构建工作区：
 
 ```bash

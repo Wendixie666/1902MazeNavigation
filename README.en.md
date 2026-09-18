@@ -19,6 +19,8 @@ The project is intended for course experiments and algorithm demonstrations. It 
 
 Requirements: ROS Noetic, Gazebo, TurtleBot3 packages, and Python 3. The repository also includes a `.devcontainer/` configuration.
 
+For a first Docker or Dev Container run, follow the [Docker / Dev Container setup guide](docs/docker-setup.md) to install dependencies and check the environment (guide in Chinese).
+
 Run one command from the repository root. The script loads the ROS environment, sets the default robot model, and builds the workspace on the first run:
 
 ```bash
